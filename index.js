@@ -5,6 +5,13 @@ const generatePassword = require('password-generator');
 
 const app = express();
 
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+
+// require the Twilio module and create a REST client
+const client = require('twilio')(accountSid, authToken);
+
+
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
@@ -19,6 +26,31 @@ app.get('/api/passwords', (req, res) => {
 
   // Return them as json
   res.json(passwords);
+
+});
+
+app.get('/api/friends', (req, res) => {
+
+  // Get list of friends
+  const friends = [];
+
+  // Return them as json
+  res.json(friends);
+
+});
+
+app.get('/api/twilio', (req, res) => {
+
+  client.messages
+  .create({
+    to: process.env.MY_CELL,
+    from: process.env.TWILIO_NUMBER,
+    body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
+  })
+  .then(message => {
+    console.log(message.sid);
+    res.json(message.sid);
+  });
 
 });
 

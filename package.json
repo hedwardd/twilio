@@ -6,7 +6,8 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "password-generator": "^2.3.2"
+    "password-generator": "^2.3.2",
+    "twilio": "^3.54.2"
   },
   "scripts": {
     "start": "npx nodemon index.js",
